@@ -78,14 +78,14 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     fontSize: 30,
     textAlign: 'center',
-    fontFamily:"Montserrat-Bold",
+    //fontFamily:"Montserrat-Bold",
   },
   regularText: {
     fontSize: 24,
     padding: 20,
     marginVertical: 8,
     textAlign: 'center',
-    fontFamily:"Montserrat-light",
+    //fontFamily:"Montserrat-light",
   },
   buttoncontainer: {
     flexDirection:"row",
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     alignSelf:"flex-start"
   },
   buttontext: {
-    fontFamily:"Montserrat-light",
+    //fontFamily:"Montserrat-light",
     color: "white",
     textAlign: "center",
     marginTop:11

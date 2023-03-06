@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {ScrollView,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView} from 'react-native';
+import {ScrollView,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView, View} from 'react-native';
 
 export default function Login({ navigation }) {
 
@@ -8,15 +8,16 @@ export default function Login({ navigation }) {
 
   return (
 
-    <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
-        <KeyboardAvoidingView>
+    <View style={styles.Login} keyboardDismissMode='on-drag'>
+        <KeyboardAvoidingView style={styles.Group446}>
         <Text style={styles.headerText}>Welcome to HMS</Text>
         <Text style={styles.subheaderText}>Sign in to continue</Text>
+        <Image source={require('../assets/Logo.png')} style={styles.Logo}/>
         <TextInput
             style={styles.inputBox}
             placeholder={'Your Email'}
             keyboardType={'email-address'}
-            selectionColor={"#0283a9"}
+            selectionColor={"rgba(144,152,177,1)"}
             mode="outlined"
             returnKeyType="next"
             value={email.value}
@@ -42,65 +43,100 @@ export default function Login({ navigation }) {
             style={styles.button}>
             <Text style={styles.buttonText}>Sign In</Text>
         </Pressable>
-
+        <Pressable>
         <Text style={styles.link}>Forgot Pasword?</Text>
-        <Text style={styles.regularText}>Don't have a account? <Text style={styles.link}>Register</Text></Text>
+        </Pressable>
+        <Text style={styles.regularText}>Don't have a account?</Text>
+        <Pressable>
+        <Text style={styles.link}>Register</Text>
+        </Pressable>
         
         
         </KeyboardAvoidingView>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  Login: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: 375,
+    height: 812,
+    boxSizing: "border-box",
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+  Group446: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
+  },
+  Logo: {
+    width: 72,
+    height: 72,
   },
   headerText: {
-    fontSize: 25,
-    color: '#0283a9',
+    fontSize: 20,
+    color: "rgba(34,50,99,1)",
     textAlign: 'center',
-    paddingVertical: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+    lineHeight: 20,
+    letterSpacing: 0.5,
   },
   subheaderText: {
-    fontSize: 20,
-    color: "grey",
+    fontSize: 12,
+    color: "rgba(144,152,177,1)",
     textAlign: 'center',
     marginBottom: 30,
+    letterSpacing: 0.5,
   },
   regularText: {
-    fontSize: 17,
-    color: "grey",
+    fontSize: 12,
+    color: "rgba(144,152,177,1)",
+    fontWeight: "bold",
+    textAlign: "center",
+    letterSpacing: 0.5,
   },
   link: {
-    fontSize: 17,
+    fontSize: 12,
     fontWeight: 'bold',
-    color: "#0283a9",
+    color: "rgba(34,50,99,1)",
     textAlign: 'center',
+    letterSpacing: 0.5,
 },
   inputBox: {
-    borderWidth: 0.5,
-    padding: 10,
+    borderWidth: 1,
+    paddingLeft: 14,
+    paddingRight: 223,
+    paddingTop: 10,
+    paddingBottom: 10,
     fontSize: 16,
-    borderColor: 'grey',
+    borderColor: "rgba(235,240,255,1)",
     width: '100%',
-    marginVertical: 12,
-    backgroundColor: 'white',
+    borderRadius: 5,
+    boxSizing: "border-box",
+    backgroundColor: "rgba(255,255,255,1)",
   },
   button: {
     fontSize: 15,
-    padding: 10,
+    padding: 16,
     marginVertical: 8,
     borderColor: '#EE9972',
     borderRadius: 5,
-    width: '100%',
-    backgroundColor: "#0283a9",
+    width: '25%',
+    backgroundColor: "rgba(34,50,99,1)",
+    boxSizing: "border-box",
   },
   buttonText: {
-    color: 'white',
+    color: "rgba(255,255,255,1)",
     textAlign: 'center',
-    fontSize: 25,
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 0.5,
   },
 });
