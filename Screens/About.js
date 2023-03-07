@@ -38,7 +38,7 @@ export default function HomeScreen({ navigation }) {
               : { color: 'white' },
           ]} onLayout={onLayout}>About Us</Text>
       </View>
-      <Text style={[styles.regularText,
+      <Text style={[styles.regularText,    
         colorScheme === "light"
         ? {color: "black"}
         : {color: 'white'}
