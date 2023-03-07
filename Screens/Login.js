@@ -19,8 +19,8 @@ export default function Login({ navigation }) {
             selectionColor={"#0283a9"}
             mode="outlined"
             returnKeyType="next"
-            value={email}
-            onChangeText={onChangeEmail}
+            value={email.value}
+            //onChangeText={(text) => setEmail({ value: text })}
             autoCapitalize="none"
             autoCompleteType="email"
             textContentType="emailAddress"
@@ -33,24 +33,18 @@ export default function Login({ navigation }) {
             selectionColor={"#0283a9"}
             mode="outlined"
             returnKeyType="next"
-            value={password}
-            onChangeText={onChangePassword}
+            value={password.value}
+            //onChangeText={(text) => setPassword({ value: text })}
             autoCapitalize="none"
         />
         <Pressable
-            onPress={() => navigation.navigate('Tabs', {
-              email: email
-            })}
+            onPress={() => navigation.navigate('Welcome')}
             style={styles.button}>
             <Text style={styles.buttonText}>Sign In</Text>
         </Pressable>
 
         <Text style={styles.link}>Forgot Pasword?</Text>
-        <Text style={styles.regularText}>Don't have a account? </Text>
-        <Pressable onPress={navigation.navigate('Signup')}>
-          <Text style={styles.link}>Register</Text>
-        </Pressable>
-        
+        <Text style={styles.regularText}>Don't have a account? <Text style={styles.link}>Register</Text></Text>
         
         
         </KeyboardAvoidingView>
@@ -79,7 +73,6 @@ const styles = StyleSheet.create({
   regularText: {
     fontSize: 17,
     color: "grey",
-    textAlign: 'center',
   },
   link: {
     fontSize: 17,
