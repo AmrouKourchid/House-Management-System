@@ -15,8 +15,11 @@ export default function Tabs() {
         iconName = focused
         ? 'home'
         : 'home-outline';
-        } if (route.name === 'About') {
-        iconName = focused ? 'infocircle' : 'infocircle-outline';
+        }
+        else if (route.name === 'About') {
+            iconName = focused 
+            ? 'abc'
+            : 'abd';
         }
         // You can return any component that you like here!
         return <Ionicons name={iconName} size={size} color={color} />;

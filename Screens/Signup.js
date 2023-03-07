@@ -68,7 +68,11 @@ export default function Signup({ navigation }) {
             style={styles.button}>
             <Text style={styles.buttonText}>Sign Up</Text>
         </Pressable>
-        <Text style={styles.regularText}>Have an account? <Text style={styles.link}>Register</Text></Text>
+        <Text style={styles.regularText}>Have an account? </Text>
+        <Pressable onPress={()=> navigation.navigate('Login')}>
+        <Text style={styles.link}>Log In</Text>
+        </Pressable>
+        
         
         
     </KeyboardAvoidingView>
