@@ -1,31 +1,17 @@
 import React, { useState } from 'react';
 import {ScrollView,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView} from 'react-native';
 
-export default function Signup({ navigation }) {
+export default function Login({ navigation }) {
 
-    const [fullname, setfullname] = useState('');
-    const [email, onChangeEmail] = useState('');
-    const [password, onChangePassword] = useState('');
-    const [repassword, onChangerePassword] = useState('');
+  const [email, onChangeEmail] = useState('');
+  const [password, onChangePassword] = useState('');
 
   return (
 
     <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
         <KeyboardAvoidingView>
-        <Text style={styles.headerText}>Let's Get Started</Text>
-        <Text style={styles.subheaderText}>Create a new account</Text>
-        <TextInput
-            style={styles.inputBox}
-            placeholder={'Full Name'}
-            keyboardType={'default'}
-            selectionColor={"#0283a9"}
-            mode="outlined"
-            returnKeyType="next"
-            value={fullname.value}
-            //onChangeText={(text) => setfullname({ value: text })}
-            autoCapitalize="none"
-            
-        />
+        <Text style={styles.headerText}>Welcome to HMS</Text>
+        <Text style={styles.subheaderText}>Sign in to continue</Text>
         <TextInput
             style={styles.inputBox}
             placeholder={'Your Email'}
@@ -33,8 +19,8 @@ export default function Signup({ navigation }) {
             selectionColor={"#0283a9"}
             mode="outlined"
             returnKeyType="next"
-            value={email.value}
-            //onChangeText={(text) => setEmail({ value: text })}
+            value={email}
+            onChangeText={onChangeEmail}
             autoCapitalize="none"
             autoCompleteType="email"
             textContentType="emailAddress"
@@ -47,31 +33,27 @@ export default function Signup({ navigation }) {
             selectionColor={"#0283a9"}
             mode="outlined"
             returnKeyType="next"
-            value={password.value}
-            //onChangeText={(text) => setPassword({ value: text })}
-            autoCapitalize="none"
-        />
-        <TextInput
-            style={styles.inputBox}
-            placeholder={'Password Again'}
-            keyboardType={'default'}
-            secureTextEntry={true}
-            selectionColor={"#0283a9"}
-            mode="outlined"
-            returnKeyType="next"
-            value={repassword.value}
-            //onChangeText={(text) => setrePassword({ value: text })}
+            value={password}
+            onChangeText={onChangePassword}
             autoCapitalize="none"
         />
         <Pressable
-            onPress={() => navigation.navigate('Welcome')}
+            onPress={() => navigation.navigate('Tabs', {
+              email: email
+            })}
             style={styles.button}>
-            <Text style={styles.buttonText}>Sign Up</Text>
+            <Text style={styles.buttonText}>Sign In</Text>
         </Pressable>
-        <Text style={styles.regularText}>Have an account? <Text style={styles.link}>Register</Text></Text>
+
+        <Text style={styles.link}>Forgot Pasword?</Text>
+        <Text style={styles.regularText}>Don't have a account? </Text>
+        <Pressable onPress={navigation.navigate('Signup')}>
+          <Text style={styles.link}>Register</Text>
+        </Pressable>
         
         
-    </KeyboardAvoidingView>
+        
+        </KeyboardAvoidingView>
     </ScrollView>
   );
 }
@@ -97,7 +79,6 @@ const styles = StyleSheet.create({
   regularText: {
     fontSize: 17,
     color: "grey",
-    marginTop:10,
     textAlign: 'center',
   },
   link: {
@@ -112,8 +93,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderColor: 'grey',
     width: '100%',
-    marginVertical: 10,
-    borderRadius: 5,
+    marginVertical: 12,
+    backgroundColor: 'white',
   },
   button: {
     fontSize: 15,

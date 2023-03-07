@@ -1,21 +1,22 @@
 import { StyleSheet, Text, View, useColorScheme } from 'react-native';
-import Login from './Screens/LoginScreen';
-import Signup from './Screens/SignUpScreen';
-import HomeScreen from './Screens/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import Tabs from './Screens/Home/Tabs';
+import Login from './Screens/Login';
+import Signup from './Screens/Signup';
 const Stack = createNativeStackNavigator();
 export default function App() {
   const scheme = useColorScheme();
   return (
     <NavigationContainer>
-    <Stack.Navigator initialRouteName='About' screenOptions={{headerTitleAlign: 'center', headerStyle: {
-      backgroundColor:"#C0EEF2"
-    }}}>
-      <Stack.Screen name='About' component={HomeScreen}/>
-      <Stack.Screen name='Signup' component={Signup}/>
-      <Stack.Screen name='Login' component={Login}/>
-    </Stack.Navigator>
+      <Stack.Navigator initialRouteName='Login' screenOptions={ ({}) => ({
+        headerShown:false
+      })}>
+        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Tabs" component={Tabs}  />
+        <Stack.Screen name="Signup" component={Signup}/>
+        
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
