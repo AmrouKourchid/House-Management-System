@@ -1,9 +1,9 @@
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, Image, Pressable } from 'react-native'
 import React, {useState} from 'react'
 import { SearchBar } from '@rneui/themed';
 
 
-export default function Home(){
+export default function Home({navigation}){
     const [search,setSearch]= useState('');
     const updateSearch = (search) => {
         setSearch(search);
@@ -30,7 +30,9 @@ export default function Home(){
             </View>
             <View style={styles.Categoryview}>
                 <Text style={styles.CategoryText}>Category</Text> 
+                <Pressable onPress={()=> navigation.navigate('Categories')}>
                 <Text style={styles.CategoryText}>More Categories</Text>
+                </Pressable>
             </View>
             <ScrollView horizontal={true} style={styles.imagetopview}>
                 <View style={styles.imagebottomview}>
@@ -50,9 +52,6 @@ export default function Home(){
                 <Text style={styles.regularText}>Pick Up & Delivery</Text>
                 </View>
             </ScrollView>
-            <View>
-
-            </View>
         </View>
     );
 }

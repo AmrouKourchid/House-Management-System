@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Tabs from './Screens/Home/Tabs';
 import Login from './Screens/Login';
 import Signup from './Screens/Signup';
+import Categories from './Screens/Home/Categories'
 const Stack = createNativeStackNavigator();
 export default function App() {
   const scheme = useColorScheme();
@@ -15,6 +16,7 @@ export default function App() {
         <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="Tabs" component={Tabs}  />
         <Stack.Screen name="Signup" component={Signup}/>
+        <Stack.Screen name="Categories" component={Categories} options={{headerShown:true}}/>
         
       </Stack.Navigator>
     </NavigationContainer>
