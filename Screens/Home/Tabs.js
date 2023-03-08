@@ -18,19 +18,19 @@ export default function Tabs() {
         }
         else if (route.name === 'About') {
             iconName = focused 
-            ? 'abc'
-            : 'abd';
+            ? 'information-circle'
+            : 'information-circle-outline';
         }
         // You can return any component that you like here!
         return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'tomato',
+        tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'gray',
-        // headerShown:false
+         headerShown:false
         })}
         >
         <Tab.Screen name="About" component={About}
-        options={{headerTitle:"About Us",headerTitleStyle:{fontFamily:"Verdana", fontSize:16}
+        options={{headerTitle:"About Us",headerTitleStyle:{fontSize:16}
         }} />
         <Tab.Screen name="Home" component={Home} />
 </Tab.Navigator>
