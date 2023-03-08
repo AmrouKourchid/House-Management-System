@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {View,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Signup({ navigation }) {
 
@@ -138,7 +139,6 @@ const styles = StyleSheet.create({
   inputBox: {
     borderWidth: 1,
     paddingLeft: 14,
-    paddingRight: 223,
     paddingTop: 15,
     paddingBottom: 15,
     fontSize: 20,
