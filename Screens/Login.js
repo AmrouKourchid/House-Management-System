@@ -8,7 +8,12 @@ export default function Login({ navigation }) {
 
   return (
 
-    <View style={styles.Login} keyboardDismissMode='on-drag'>
+    <ScrollView style={styles.Login} keyboardDismissMode='on-drag' contentContainerStyle={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+    }}>
         <KeyboardAvoidingView style={styles.Group446}>
         <Image source={require('../assets/Logo.png')} style={styles.Logo}/>
         <Text style={styles.headerText}>Welcome to HMS</Text>
@@ -50,16 +55,12 @@ export default function Login({ navigation }) {
         <Text style={styles.link}>Register</Text>
         </Pressable>
         </KeyboardAvoidingView>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   Login: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
     width: "100%",
     height: "100%",
     boxSizing: "border-box",

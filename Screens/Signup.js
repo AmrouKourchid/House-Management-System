@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {View,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {View,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView, ScrollView} from 'react-native';
+
 
 export default function Signup({ navigation }) {
 
@@ -11,7 +11,12 @@ export default function Signup({ navigation }) {
 
   return (
 
-    <View style={styles.Signup} keyboardDismissMode='on-drag'>
+    <ScrollView style={styles.Signup} keyboardDismissMode='on-drag' contentContainerStyle={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+    }}>
         <KeyboardAvoidingView style={styles.Group446}>
         <Image source={require('../assets/Logo.png')} style={styles.Logo}/>
         <Text style={styles.headerText}>Let's Get Started</Text>
@@ -78,16 +83,12 @@ export default function Signup({ navigation }) {
         
         
     </KeyboardAvoidingView>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   Signup: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
     width: "100%",
     height: "100%",
     boxSizing: "border-box",
