@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {ScrollView,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView} from 'react-native';
+import {View,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView} from 'react-native';
 
 export default function Signup({ navigation }) {
 
@@ -10,8 +10,9 @@ export default function Signup({ navigation }) {
 
   return (
 
-    <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
-        <KeyboardAvoidingView>
+    <View style={styles.Signup} keyboardDismissMode='on-drag'>
+        <KeyboardAvoidingView style={styles.Group446}>
+        <Image source={require('../assets/Logo.png')} style={styles.Logo}/>
         <Text style={styles.headerText}>Let's Get Started</Text>
         <Text style={styles.subheaderText}>Create a new account</Text>
         <TextInput
@@ -76,60 +77,92 @@ export default function Signup({ navigation }) {
         
         
     </KeyboardAvoidingView>
-    </ScrollView>
+    </View>
   );
 }
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  Signup: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
+    backgroundColor: "rgba(255,255,255,1)",
+  },
+  Group446: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
+  },
+  Logo: {
+    marginTop: 50,
+    width: 100,
+    height: 100,
   },
   headerText: {
-    fontSize: 25,
-    color: '#0283a9',
+    fontSize: 30,
+    color: "rgba(34,50,99,1)",
     textAlign: 'center',
-    paddingVertical: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+    lineHeight: 50,
+    letterSpacing: 0.5,
+    marginTop: 10,
   },
   subheaderText: {
     fontSize: 20,
-    color: "grey",
+    color: "rgba(144,152,177,1)",
     textAlign: 'center',
     marginBottom: 30,
+    letterSpacing: 0.5,
   },
   regularText: {
-    fontSize: 17,
-    color: "grey",
-    marginTop:10,
-    textAlign: 'center',
+    fontSize: 20,
+    color: "rgba(144,152,177,1)",
+    fontWeight: "bold",
+    textAlign: "center",
+    letterSpacing: 0.5,
   },
   link: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: "#0283a9",
+    color: "rgba(34,50,99,1)",
     textAlign: 'center',
+    letterSpacing: 0.5,
 },
   inputBox: {
-    borderWidth: 0.5,
-    padding: 10,
-    fontSize: 16,
-    borderColor: 'grey',
-    width: '100%',
-    marginVertical: 10,
+    borderWidth: 1,
+    paddingLeft: 14,
+    paddingRight: 223,
+    paddingTop: 15,
+    paddingBottom: 15,
+    fontSize: 20,
+    borderColor: "rgba(235,240,255,1)",
+    width: '85%',
     borderRadius: 5,
+    boxSizing: "border-box",
+    backgroundColor: "rgba(255,255,255,1)",
+    marginTop: 15,
   },
   button: {
-    fontSize: 15,
-    padding: 10,
-    marginVertical: 8,
+    padding: 16,
+    marginVertical: 20,
     borderColor: '#EE9972',
     borderRadius: 5,
-    width: '100%',
-    backgroundColor: "#0283a9",
+    width: '25%',
+    backgroundColor: "rgba(34,50,99,1)",
+    boxSizing: "border-box",
   },
   buttonText: {
-    color: 'white',
+    color: "rgba(255,255,255,1)",
     textAlign: 'center',
-    fontSize: 25,
+    fontSize: 15,
+    fontWeight: "bold",
+    letterSpacing: 0.5,
   },
 });
