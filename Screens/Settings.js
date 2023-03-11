@@ -13,6 +13,14 @@ export default function Settings({navigation}){
                 Log out
                 </Text>
                 </Pressable>
+                <Pressable 
+                onPress={()=> navigation.navigate('Form') }
+                style={styles.button}
+                >
+                <Text style={styles.buttontext}>
+                Edit Profile
+                </Text>
+                </Pressable>
                 
             </View>
         </View>
