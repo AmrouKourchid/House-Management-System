@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
 import {View,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView, ScrollView} from 'react-native';
 
-
 export default function Signup({ navigation }) {
 
-    const [fullname, setfullname] = useState('');
-    const [email, onChangeEmail] = useState('');
-    const [password, onChangePassword] = useState('');
-    const [repassword, onChangerePassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [repassword, setRepassword] = useState('');
+    const [emailError, setEmailError] = useState(false);
+    const [passwordMatchError, setPasswordMatchError] = useState(false);
+
+    const validateEmail = (email) => {
+        const emailPattern = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+        return emailPattern.test(email);
+    }
+
+    const handleSignUp = () => {
+        if (!validateEmail(email)) {
+            setEmailError(true);
+            return;
+        }
+        if (password !== repassword) {
+            setPasswordMatchError(true);
+            return;
+        }
+        navigation.navigate('Login')
+    }
 
   return (
 
@@ -22,30 +39,19 @@ export default function Signup({ navigation }) {
         <Text style={styles.headerText}>Let's Get Started</Text>
         <Text style={styles.subheaderText}>Create a new account</Text>
         <TextInput
-            style={styles.inputBox}
-            placeholder={'Full Name'}
-            keyboardType={'default'}
-            selectionColor={"#0283a9"}
-            mode="outlined"
-            returnKeyType="next"
-            value={fullname.value}
-            //onChangeText={(text) => setfullname({ value: text })}
-            autoCapitalize="none"
-            
-        />
-        <TextInput
-            style={styles.inputBox}
+            style={[styles.inputBox, emailError && styles.inputBoxError]}
             placeholder={'Your Email'}
             keyboardType={'email-address'}
             selectionColor={"#0283a9"}
             mode="outlined"
             returnKeyType="next"
-            value={email.value}
-            //onChangeText={(text) => setEmail({ value: text })}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
             autoCapitalize="none"
             autoCompleteType="email"
             textContentType="emailAddress"
         />
+        {emailError && <Text style={styles.errorText}>Please enter a valid email</Text>}
         <TextInput
             style={styles.inputBox}
             placeholder={'Password'}
@@ -54,24 +60,25 @@ export default function Signup({ navigation }) {
             selectionColor={"#0283a9"}
             mode="outlined"
             returnKeyType="next"
-            value={password.value}
-            //onChangeText={(text) => setPassword({ value: text })}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
             autoCapitalize="none"
         />
         <TextInput
-            style={styles.inputBox}
+            style={[styles.inputBox, passwordMatchError && styles.inputBoxError]}
             placeholder={'Password Again'}
             keyboardType={'default'}
             secureTextEntry={true}
             selectionColor={"#0283a9"}
             mode="outlined"
             returnKeyType="next"
-            value={repassword.value}
-            //onChangeText={(text) => setrePassword({ value: text })}
+            value={repassword}
+            onChangeText={(text) => setRepassword(text)}
             autoCapitalize="none"
         />
+        {passwordMatchError && <Text style={styles.errorText}>Passwords do not match</Text>}
         <Pressable
-            onPress={() => navigation.navigate('Login')}
+            onPress={handleSignUp}
             style={styles.button}>
             <Text style={styles.buttonText}>Sign Up</Text>
         </Pressable>
@@ -79,9 +86,6 @@ export default function Signup({ navigation }) {
         <Pressable onPress={()=> navigation.navigate('Login')}>
         <Text style={styles.link}>Log In</Text>
         </Pressable>
-        
-        
-        
     </KeyboardAvoidingView>
     </ScrollView>
   );
@@ -136,7 +140,7 @@ const styles = StyleSheet.create({
     color: "rgba(34,50,99,1)",
     textAlign: 'center',
     letterSpacing: 0.5,
-},
+  },
   inputBox: {
     borderWidth: 1,
     paddingLeft: 14,
@@ -165,5 +169,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     letterSpacing: 0.5,
+  },
+  errorText: {
+    fontSize: 12,
+    color: 'red',
+    marginTop: 5,
   },
 });

@@ -1,60 +1,78 @@
 import React, { useState } from 'react';
-import {ScrollView,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView, View} from 'react-native';
+import { ScrollView, Text, StyleSheet, TextInput, Pressable, Image, KeyboardAvoidingView, View } from 'react-native';
 
 export default function Login({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const [email, onChangeEmail] = useState('');
-  const [password, onChangePassword] = useState('');
+  const validUsers = [
+    { email: 'bouzahartaha7@gmail.com', password: 'Taha@01022002' },
+    { email: 'a', password: '1' },
+  ];
+
+  const handleLogin = () => {
+    const isValidUser = validUsers.some(user => user.email === email && user.password === password);
+
+    if (isValidUser) {
+      setErrorMessage('');
+      navigation.navigate('Tabs');
+    } else {
+      setErrorMessage('Invalid email or password');
+    }
+  };
 
   return (
-
-    <ScrollView style={styles.Login} keyboardDismissMode='on-drag' contentContainerStyle={{
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-start",
-      alignItems: "flex-start",
-    }}>
-        <KeyboardAvoidingView style={styles.Group446}>
-        <Image source={require('../assets/Logo.png')} style={styles.Logo}/>
+    <ScrollView
+      style={styles.Login}
+      keyboardDismissMode="on-drag"
+      contentContainerStyle={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+      }}>
+      <KeyboardAvoidingView style={styles.Group446}>
+        <Image source={require('../assets/Logo.png')} style={styles.Logo} />
         <Text style={styles.headerText}>Welcome to HMS</Text>
         <Text style={styles.subheaderText}>Log in to continue</Text>
         <TextInput
-            style={styles.inputBox}
-            placeholder={'Your Email'}
-            keyboardType={'email-address'}
-            selectionColor={"rgba(144,152,177,1)"}
-            mode="outlined"
-            returnKeyType="next"
-            value={email}
-            onChangeText={onChangeEmail}
-            autoCapitalize="none"
-            autoCompleteType="email"
-            textContentType="emailAddress"
+          style={styles.inputBox}
+          placeholder={'Your Email'}
+          keyboardType={'email-address'}
+          selectionColor={'rgba(144,152,177,1)'}
+          mode="outlined"
+          returnKeyType="next"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          autoCompleteType="email"
+          textContentType="emailAddress"
         />
         <TextInput
-            style={styles.inputBox}
-            placeholder={'Password'}
-            keyboardType={'default'}
-            secureTextEntry={true}
-            selectionColor={"rgba(144,152,177,1)"}
-            mode="outlined"
-            returnKeyType="next"
-            value={password}
-            onChangeText={onChangePassword}
-            autoCapitalize="none"
+          style={styles.inputBox}
+          placeholder={'Password'}
+          keyboardType={'default'}
+          secureTextEntry={true}
+          selectionColor={'rgba(144,152,177,1)'}
+          mode="outlined"
+          returnKeyType="next"
+          value={password}
+          onChangeText={setPassword}
+          autoCapitalize="none"
         />
-        <Pressable
-            onPress={() => navigation.navigate('Tabs')}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Log In</Text>
+        <Pressable onPress={handleLogin} style={styles.button}>
+          <Text style={styles.buttonText}>Log In</Text>
         </Pressable>
+
+        {errorMessage !== '' && <Text style={styles.errorText}>{errorMessage}</Text>}
 
         <Text style={styles.link}>Forgot Pasword?</Text>
         <Text style={styles.regularText}>Don't have a account?</Text>
-        <Pressable onPress={()=> navigation.navigate('Signup')}>
-        <Text style={styles.link}>Register</Text>
+        <Pressable onPress={() => navigation.navigate('Signup')}>
+          <Text style={styles.link}>Register</Text>
         </Pressable>
-        </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 }
@@ -108,11 +126,11 @@ const styles = StyleSheet.create({
     color: "rgba(34,50,99,1)",
     textAlign: 'center',
     letterSpacing: 0.5,
-},
+    marginTop: 10,
+  },
   inputBox: {
     borderWidth: 1,
     paddingLeft: 14,
-    
     paddingTop: 15,
     paddingBottom: 15,
     fontSize: 20,
@@ -138,5 +156,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     letterSpacing: 0.5,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
   },
 });
