@@ -2,6 +2,18 @@ import { View, Text, ScrollView, StyleSheet, Image, Pressable } from 'react-nati
 import React, { useState } from 'react'
 import { SearchBar } from '@rneui/themed';
 
+function CategoryButton({ imageSource, text, onPress, category }) {
+    return (
+        <View style={styles.imagebottomview}>
+            <Pressable onPress={() => onPress(category)}>
+            <Image source={imageSource} style={styles.image}/>
+                <Text style={styles.regularText}>{text}</Text>
+            </Pressable>
+        </View>
+    );
+}
+
+
 
 export default function Home({ navigation }) {
     const [search, setSearch] = useState('');
@@ -15,7 +27,7 @@ export default function Home({ navigation }) {
                 <Text style={styles.headerText}>
                     Welcome Back !
                 </Text>
-                <Text style={styles.regularText}>
+                <Text style={styles.subheaderText}>
                     find more than 100 providers
                 </Text>
             </View>
@@ -28,42 +40,37 @@ export default function Home({ navigation }) {
                     round={true}
                 />
             </View>
-            <View style={styles.Categoryview}>
-                <Text style={styles.CategoryText}>Category</Text>
-                <Pressable onPress={() => navigation.navigate('Categories')}>
-                    <Text style={styles.CategoryText}>More Categories</Text>
-                </Pressable>
-            </View>
-            <ScrollView horizontal={true} style={styles.imagetopview}>
-                <View style={styles.imagebottomview}>
-                    <Pressable onPress={() => navigation.navigate('Listprofiles')}>
-                        <Image source={require('../../assets/Category1.png')} style={styles.image} resizeMode="cover" />
-                        <Text style={styles.regularText}>Maintenance And Repair </Text>
-                    </Pressable>
-                </View>
+            <ScrollView style={styles.imagetopview}>
+                <CategoryButton
+                    imageSource={require('../../assets/Plumber.png')}
+                    text="Plumber"
+                    onPress={(category) => navigation.navigate('Listprofiles', { category })}
+                    category="plumber"
+                />
+                <CategoryButton
+                    imageSource={require('../../assets/electrician.jpg')}
+                    text="Electrician"
+                    onPress={(category) => navigation.navigate('Listprofiles', { category })}
+                    category="electrician"
+                />
+                <CategoryButton
+                    imageSource={require('../../assets/carpenter.png')}
+                    text="Carpenter"
+                    onPress={(category) => navigation.navigate('Listprofiles', { category })}
+                    category="carpenter"
+                />
+                <CategoryButton
+                    imageSource={require('../../assets/painter.png')}
+                    text="Painter"
+                    onPress={(category) => navigation.navigate('Listprofiles', { category })}
+                    category="painter"
+                />
 
-                <View style={styles.imagebottomview}>
-                    <Pressable onPress={() => navigation.navigate('Listprofiles')}>
-                        <Image source={require('../../assets/Category2.png')} style={styles.image} />
-                        <Text style={styles.regularText}>Appliance Repair</Text>
-                    </Pressable>
-                </View>
-                <View style={styles.imagebottomview}>
-                    <Pressable onPress={() => navigation.navigate('Listprofiles')}>
-                        <Image source={require('../../assets/Category3.png')} style={styles.image} />
-                        <Text style={styles.regularText}>House Cleaning</Text>
-                    </Pressable>
-                </View>
-                <View style={styles.imagebottomview}>
-                    <Pressable onPress={() => navigation.navigate('Listprofiles')}>
-                        <Image source={require('../../assets/Category4.png')} style={styles.image} />
-                        <Text style={styles.regularText}>Pick Up & Delivery</Text>
-                    </Pressable>
-                </View>
             </ScrollView>
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     view: {
         flex: 1,
@@ -80,30 +87,29 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold"
     },
+    subheaderText: {
+        fontSize: 17,
+        color: "#3d4b77",
+    },
     regularText: {
         fontSize: 17,
         color: "#3d4b77",
-    },
-    Categoryview: {
-        marginTop: 20,
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
-    CategoryText: {
-        fontSize: 17,
-        color: "#3d4b77",
-        fontWeight: "bold"
+        textAlign: 'center',
     },
     imagetopview: {
-        marginTop: 25,
-    },
-    image: {
-        marginLeft: 20
+        marginTop: 50,
     },
     imagebottomview: {
-        borderColor: "#3d4b77", borderWidth: 2, borderRadius: 5, marginBottom: 350, borderRightWidth: 1
-    }
-
-
-
-})
+        borderColor: "#3d4b77",
+        borderWidth: 2,
+        width: "50%",
+        borderRadius: 10,
+        marginTop: 20,
+        alignSelf: 'center',
+    },
+    image: {
+        width: 100,
+        height: 100,
+        alignSelf: 'center',
+      },
+});
