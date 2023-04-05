@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import { ScrollView, Text, StyleSheet, TextInput, Pressable, Image, KeyboardAvoidingView, View } from 'react-native';
+import axios from 'axios';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const validUsers = [
-    { email: 'bouzahartaha7@gmail.com', password: 'Taha@01022002' },
-    { email: 'a', password: '1' },
-  ];
-
-  const handleLogin = () => {
-    const isValidUser = validUsers.some(user => user.email === email && user.password === password);
-
-    if (isValidUser) {
-      setErrorMessage('');
-      navigation.navigate('Tabs');
-    } else {
-      setErrorMessage('Invalid email or password');
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/login', {
+        email,
+        password,
+      });
+      
+      if (response.status === 200) {
+        setErrorMessage('');
+        navigation.navigate('Tabs');
+      } else {
+        setErrorMessage('Invalid email or password');
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('An error occurred');
     }
   };
 
