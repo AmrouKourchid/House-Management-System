@@ -68,7 +68,7 @@ export default function Login({ navigation }) {
         <Pressable onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Log In</Text>
         </Pressable>
-        <Pressable style={styles.button}  onPress={()=> navigation.navigate('Home')}><Text>Force Login</Text></Pressable>
+        <Pressable style={styles.button}  onPress={()=> navigation.navigate('Tabs')}><Text style={styles.buttonText}>Force Login</Text></Pressable>
 
         {errorMessage !== '' && <Text style={styles.errorText}>{errorMessage}</Text>}
 
