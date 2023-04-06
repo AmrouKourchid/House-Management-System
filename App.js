@@ -6,7 +6,8 @@ import Login from './Screens/Login';
 import Signup from './Screens/Signup';
 import Listprofiles from './Screens/Allprofiles/Listprofiles';
 import Form from './Screens/Form';
-
+import Request from './Screens/Home/Request';
+import User from './Screens/Allprofiles/User';
 const Stack = createNativeStackNavigator();
 export default function App() {
   const scheme = useColorScheme();
@@ -20,7 +21,8 @@ export default function App() {
         <Stack.Screen name="Signup" component={Signup}/>
         <Stack.Screen name="Listprofiles" component={Listprofiles} options={{headerShown:true}}/>
         <Stack.Screen name="Form" component={Form} options={{headerShown:true}}/>
-        
+        <Stack.Screen name="Request" component={Request} options={{headerShown:true}}/>
+        <Stack.Screen name="Profiles" component={User} />
       </Stack.Navigator>
     </NavigationContainer>
   );
