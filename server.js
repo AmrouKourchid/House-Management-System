@@ -9,6 +9,15 @@ const connection = mysql.createConnection({
   database: 'hms'
 });
 
+// connect to the database
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to database:', err);
+  } else {
+    console.log('Connected to database!');
+  }
+});
+
 const app = express();
 
 app.use(express.json());

@@ -7,7 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "dev" : "nodemon server"
+    "dev": "nodemon server"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -23,6 +23,7 @@
     "expo-font": "~11.0.1",
     "expo-status-bar": "~1.4.2",
     "express": "^4.18.2",
+    "mysql": "^2.18.1",
     "react": "18.1.0",
     "react-native": "0.70.5",
     "react-native-gesture-handler": "~2.8.0",
