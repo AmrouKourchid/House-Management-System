@@ -67,6 +67,36 @@ app.post('/Signup', (req, res) => {
   });
 });
 
+app.get('/workers/:category', (req, res) => {
+  const { category } = req.params;
+  const sql = `SELECT * FROM workers WHERE category = '${category}'`;
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error retrieving providers:', err);
+      res.status(500).json({ message: 'Internal server error.' });
+      return;
+    }
+    res.json(results);
+  });
+});
+// handle add worker form submission
+app.post('/addWorker', (req, res) => {
+  const { name, category, cellPhone, addressUser } = req.body;
+  const query = 'INSERT INTO workers (name, category, cellPhone, addressUser) VALUES (?, ?, ?, ?)';
+  const values = [name, category, cellPhone, addressUser];
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error('Error inserting worker:', error);
+      res.status(500).json({ message: 'Internal server error' });
+      return;
+    }
+    console.log('Worker inserted:', results);
+    res.status(200).json({ message: 'Worker created successfully' });
+  });
+});
+
+
+
 // start the server
 app.listen(port, () => {
   console.log(`Server listening at http://192.168.0.10:${port}`);

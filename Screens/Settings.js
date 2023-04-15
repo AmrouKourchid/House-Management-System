@@ -21,6 +21,15 @@ export default function Settings({navigation}){
                 Edit Profile
                 </Text>
                 </Pressable>
+
+                <Pressable 
+                onPress={()=> navigation.navigate('Addworker') }
+                style={styles.button}
+                >
+                <Text style={styles.buttontext}>
+                Add Worker
+                </Text>
+                </Pressable>
                 
             </View>
         </View>

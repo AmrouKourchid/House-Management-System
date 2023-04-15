@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 export default function User({
   firstName,
   lastName,
-  pictureUser,
   cellPhone,
   addressUser, 
 }) {
@@ -21,15 +20,7 @@ export default function User({
       </Card.Title>
       <Card.Divider />
       <View style={{ flexDirection: "row" }}>
-        <Card.Image
-          style={{
-            width: 90,
-            marginHorizontal: 9,
-            height: 100,
-            borderRadius: 80,
-          }}
-          source={pictureUser}
-        />
+        
         <View>
           <Text style={{ marginTop: 10, fontSize: 12, fontWeight: "bold" }}>
             Phone: <Text style={{ fontWeight: "500" }}>{cellPhone}</Text>

@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput, Pressable, Image, KeyboardAvoidingView} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Image,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from 'react-native';
 import axios from 'axios';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.post('http://192.168.0.10:3000/Login', {
         email,
         password,
       });
-      console.log(response.data);
       if (response.status === 200) {
         setErrorMessage('');
         navigation.navigate('Tabs');
@@ -21,9 +31,16 @@ export default function Login({ navigation }) {
         setErrorMessage('Invalid email or password');
       }
     } catch (error) {
-      console.error(error);
+      if (error.response.status === 401) {
+        setErrorMessage('Invalid email or password');
+      } else {
+        setErrorMessage('Something went wrong. Please try again later.');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
+
   
 
   return (
