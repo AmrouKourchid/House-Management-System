@@ -1,11 +1,11 @@
 const express = require('express');
 const mysql = require('mysql');
-const cors = require('cors');
+const bodyParser = require('body-parser');
 
-
+s
 const app = express();
 const port = 3000;
-app.use(cors());
+app.use(bodyParser.json());
 
 // create a connection to your MySQL database
 const connection = mysql.createConnection({
@@ -29,38 +29,45 @@ app.use(express.urlencoded({ extended: true }));
 
 // redirect root path to login page
 app.get('/', (req, res) => {
-  res.redirect('/login');
+  res.redirect('/Login');
 });
 
 // serve the login page
-app.get('/login', (req, res) => {
+app.get('/Login', (req, res) => {
   res.send('This is the login page');
 });
 
 // handle login form submission
-app.post('/login', (req, res) => {
-  // retrieve email and password from the request body
+app.post('/Login', (req, res) => {
   const { email, password } = req.body;
-
-  // construct a SQL query to retrieve the user with the given email and password
-  const query = `SELECT * FROM users WHERE email = '${email}' AND password = '${password}'`;
-
-  // execute the query
-  connection.query(query, (err, results) => {
+  const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
+  connection.query(sql, [email, password], (err, results) => {
     if (err) {
-      console.error('Error executing query:', err);
-      res.status(500).send('Internal Server Error');
-    } else if (results.length === 0) {
-      // no user found with the given email and password
-      res.status(401).send('Invalid email or password');
-    } else {
-      // user found with the given email and password
-      res.send('Logged in successfully!');
+      return res.status(500).json({ error: err.message });
     }
+    if (results.length === 0) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+    return res.status(200).json({ message: 'Login successful' });
+  });
+});
+
+app.post('/Signup', (req, res) => {
+  const { email, password } = req.body;
+  const query = 'INSERT INTO users (email, password) VALUES (?, ?)';
+  const values = [email, password];
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error('Error inserting user:', error);
+      res.status(500).json({ message: 'Internal server error' });
+      return;
+    }
+    console.log('User inserted:', results);
+    res.status(200).json({ message: 'User created successfully' });
   });
 });
 
 // start the server
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+  console.log(`Server listening at http://192.168.0.10:${port}`);
 });
