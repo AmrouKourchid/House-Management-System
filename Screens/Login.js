@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput, Pressable, Image, KeyboardAvoidingView, View } from 'react-native';
+import { ScrollView, Text, StyleSheet, TextInput, Pressable, Image, KeyboardAvoidingView} from 'react-native';
 import axios from 'axios';
 
 export default function Login({ navigation }) {
@@ -9,11 +9,11 @@ export default function Login({ navigation }) {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/login', {
+      const response = await axios.post('http://192.168.0.10:3000/Login', {
         email,
         password,
       });
-      
+      console.log(response.data);
       if (response.status === 200) {
         setErrorMessage('');
         navigation.navigate('Tabs');
@@ -22,21 +22,20 @@ export default function Login({ navigation }) {
       }
     } catch (error) {
       console.error(error);
-      setErrorMessage('An error occurred');
     }
   };
+  
 
   return (
     <ScrollView
       style={styles.Login}
-      keyboardDismissMode="on-drag"
       contentContainerStyle={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
       }}>
-      <KeyboardAvoidingView style={styles.Group446}>
+      <KeyboardAvoidingView style={styles.Group446} behavior="padding">
         <Image source={require('../assets/Logo.png')} style={styles.Logo} />
         <Text style={styles.headerText}>Welcome to HMS</Text>
         <Text style={styles.subheaderText}>Log in to continue</Text>
@@ -51,7 +50,7 @@ export default function Login({ navigation }) {
           onChangeText={setEmail}
           autoCapitalize="none"
           autoCompleteType="email"
-          textContentType="emailAddress"
+          textContentType="email"
         />
         <TextInput
           style={styles.inputBox}
@@ -72,8 +71,8 @@ export default function Login({ navigation }) {
 
         {errorMessage !== '' && <Text style={styles.errorText}>{errorMessage}</Text>}
 
-        <Text style={styles.link}>Forgot Pasword?</Text>
-        <Text style={styles.regularText}>Don't have a account?</Text>
+        <Text style={styles.link}>Forgot Password?</Text>
+        <Text style={styles.regularText}>Don't have an account?</Text>
         <Pressable onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.link}>Register</Text>
         </Pressable>

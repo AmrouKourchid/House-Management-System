@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {View,Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView, ScrollView} from 'react-native';
+import {Text,StyleSheet,TextInput,Pressable,Image,KeyboardAvoidingView, ScrollView} from 'react-native';
+import axios from 'axios';
 
 export default function Signup({ navigation }) {
 
@@ -14,7 +15,7 @@ export default function Signup({ navigation }) {
         return emailPattern.test(email);
     }
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
         if (!validateEmail(email)) {
             setEmailError(true);
             return;
@@ -23,9 +24,16 @@ export default function Signup({ navigation }) {
             setPasswordMatchError(true);
             return;
         }
-        navigation.navigate('Login')
-    }
-
+        try {
+          const response = await axios.post('http://192.168.0.10:3000/Signup', { email, password });
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      navigation.navigate('Login')
+      };
+        
+    
   return (
 
     <ScrollView style={styles.Signup} keyboardDismissMode='on-drag' contentContainerStyle={{
@@ -46,7 +54,7 @@ export default function Signup({ navigation }) {
             mode="outlined"
             returnKeyType="next"
             value={email}
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={text => setEmail(text)}
             autoCapitalize="none"
             autoCompleteType="email"
             textContentType="emailAddress"
@@ -61,7 +69,7 @@ export default function Signup({ navigation }) {
             mode="outlined"
             returnKeyType="next"
             value={password}
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={text => setPassword(text)}
             autoCapitalize="none"
         />
         <TextInput
@@ -73,13 +81,11 @@ export default function Signup({ navigation }) {
             mode="outlined"
             returnKeyType="next"
             value={repassword}
-            onChangeText={(text) => setRepassword(text)}
+            onChangeText={text => setRepassword(text)}
             autoCapitalize="none"
         />
         {passwordMatchError && <Text style={styles.errorText}>Passwords do not match</Text>}
-        <Pressable
-            onPress={handleSignUp}
-            style={styles.button}>
+        <Pressable onPress={handleSignUp} style={styles.button}>
             <Text style={styles.buttonText}>Sign Up</Text>
         </Pressable>
         <Text style={styles.regularText}>Have an account? </Text>
@@ -89,8 +95,8 @@ export default function Signup({ navigation }) {
     </KeyboardAvoidingView>
     </ScrollView>
   );
-}
-
+  
+  }
 const styles = StyleSheet.create({
   Signup: {
     width: "100%",
