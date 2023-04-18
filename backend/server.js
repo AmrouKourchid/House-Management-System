@@ -79,21 +79,42 @@ app.get('/workers/:category', (req, res) => {
     res.json(results);
   });
 });
-// handle add worker form submission
+
+
 app.post('/addWorker', (req, res) => {
   const { name, category, cellPhone, addressUser } = req.body;
-  const query = 'INSERT INTO workers (name, category, cellPhone, addressUser) VALUES (?, ?, ?, ?)';
-  const values = [name, category, cellPhone, addressUser];
-  connection.query(query, values, (error, results) => {
-    if (error) {
-      console.error('Error inserting worker:', error);
+
+  // check if worker with same cellPhone or addressUser already exists
+  const checkQuery = 'SELECT * FROM workers WHERE cellPhone = ? OR addressUser = ?';
+  connection.query(checkQuery, [cellPhone, addressUser], (checkErr, checkResults) => {
+    if (checkErr) {
+      console.error('Error checking for existing worker:', checkErr);
       res.status(500).json({ message: 'Internal server error' });
       return;
     }
-    console.log('Worker inserted:', results);
-    res.status(200).json({ message: 'Worker created successfully' });
+
+    if (checkResults.length > 0) {
+      console.error('Worker with the same number or address already exists');
+      res.status(400).json({ message: 'Worker with the same number or address already exists' });
+      return;
+    }
+
+    // insert new worker if check passes
+    const insertQuery = 'INSERT INTO workers (name, category, cellPhone, addressUser) VALUES (?, ?, ?, ?)';
+    const values = [name, category, cellPhone, addressUser];
+    connection.query(insertQuery, values, (insertErr, insertResults) => {
+      if (insertErr) {
+        console.error('Error inserting worker:', insertErr);
+        res.status(500).json({ message: 'Internal server error' });
+        return;
+      }
+      console.log('Worker inserted:', insertResults);
+      res.status(200).json({ message: 'Worker created successfully' });
+    });
   });
 });
+
+
 
 
 

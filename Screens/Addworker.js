@@ -1,17 +1,29 @@
+
 import React, { useState } from "react";
 import { View, TextInput, Text, Pressable, StyleSheet } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 
-const Addworker = ({ setWorkers }) => {
+// Move the API URL to a configuration file
+const API_URL = "http://192.168.0.10:3000";
+
+const Addworker = () => {
   const [name, setName] = useState("");
   const [cellPhone, setCellPhone] = useState("");
   const [addressUser, setAddressUser] = useState("");
   const [category, setCategory] = useState("Plumber");
+  const [existingWorker, setExistingWorker] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const addWorker = () => {
+    // Add input validation
+    if (!name || !cellPhone || !addressUser) {
+      setErrorMessage("Please enter all fields.");
+      return;
+    }
+
     axios
-      .post("http://192.168.0.10:3000/addWorker", {
+      .post(`${API_URL}/addWorker`, {
         name,
         category,
         cellPhone,
@@ -19,49 +31,73 @@ const Addworker = ({ setWorkers }) => {
       })
       .then((response) => {
         console.log(response.data);
-        setWorkers([...workers, { name, cellPhone, addressUser }]);
-        setName("");
-        setCellPhone("");
-        setAddressUser("");
-        setCategory("Plumber");
+        const existing = response.data.existing;
+        if (existing) {
+          console.log("Worker with the same number or address already exists");
+          setExistingWorker(true);
+          setErrorMessage("Worker with the same number or address already exists");
+        } else {
+          setName("");
+          setCellPhone("");
+          setAddressUser("");
+          setCategory("Plumber");
+          setExistingWorker(false);
+          setErrorMessage(null);
+        }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        setErrorMessage("An error occurred.");
+      });
   };
+
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Cell Phone"
-        value={cellPhone}
-        onChangeText={setCellPhone}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Address"
-        value={addressUser}
-        onChangeText={setAddressUser}
-      />
-      <Picker
-        selectedValue={category}
-        onValueChange={(itemValue) => setCategory(itemValue)}
-        style={styles.picker}
-      >
-        <Picker.Item label="Plumber" value="Plumber" />
-        <Picker.Item label="Electrician" value="Electrician" />
-        <Picker.Item label="Carpenter" value="Carpenter" />
-        <Picker.Item label="Painter" value="Painter" />
-      </Picker>
-      <Pressable style={styles.button} onPress={addWorker}>
-        <Text style={styles.buttonText}>Add Worker</Text>
-      </Pressable>
-    </View>
+  {existingWorker && (
+    <Text style={styles.errorText}>
+      Worker with the same number or address already exists
+    </Text>
+  )}
+  <TextInput
+    style={styles.input}
+    placeholder="Name"
+    value={name}
+    onChangeText={setName}
+  />
+  <TextInput
+    style={styles.input}
+    placeholder="Cell Phone"
+    value={cellPhone}
+    onChangeText={setCellPhone}
+    keyboardType="numeric"
+  />
+  <TextInput
+    style={styles.input}
+    placeholder="Address"
+    value={addressUser}
+    onChangeText={setAddressUser}
+  />
+  <Picker
+    selectedValue={category}
+    onValueChange={(itemValue) => setCategory(itemValue)}
+    style={styles.picker}
+  >
+    <Picker.Item label="Plumber" value="Plumber" />
+    <Picker.Item label="Electrician" value="Electrician" />
+    <Picker.Item label="Carpenter" value="Carpenter" />
+    <Picker.Item label="Painter" value="Painter" />
+  </Picker>
+  <Pressable style={styles.button} onPress={addWorker}>
+    <Text style={styles.buttonText}>Add Worker</Text>
+  </Pressable>
+  {errorMessage && (
+    <Text style={styles.errorText}>
+      {errorMessage}
+    </Text>
+  )}
+</View>
+
   );
 };
 
