@@ -9,6 +9,7 @@ import Form from './Screens/Form';
 import Request from './Screens/Home/Request';
 import User from './Screens/Allprofiles/User';
 import Addworker from './Screens/Addworker';
+import Rating from './Screens/Rating';
 const Stack = createNativeStackNavigator();
 export default function App() {
   const scheme = useColorScheme();
@@ -25,6 +26,8 @@ export default function App() {
         <Stack.Screen name="Request" component={Request} options={{headerShown:true}}/>
         <Stack.Screen name="Profiles" component={User} />
         <Stack.Screen name="Addworker" component={Addworker} options={{headerShown:true}}/>
+        <Stack.Screen name="Rating" component={Rating} options={{headerShown:true}}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -135,6 +135,48 @@ app.post('/addWorker', (req, res) => {
 
 
 
+// Save a rating
+app.post('/ratings', (req, res) => {
+  const { workerId, rating } = req.body;
+
+  // Validate the request data
+  if (!workerId || !rating) {
+    return res.status(400).json({ error: 'Invalid request data' });
+  }
+
+  // Save the rating to the database
+  connection.query(
+    'INSERT INTO ratings (workerId, rating) VALUES (?, ?)',
+    [workerId, rating],
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ error: 'Failed to save rating to the database' });
+      }
+
+      // Calculate the average rating for the worker
+      connection.query(
+        'SELECT AVG(rating) AS averageRating FROM ratings WHERE workerId = ?',
+        [workerId],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Failed to calculate average rating' });
+          }
+
+          const averageRating = results[0].averageRating || 0;
+          res.status(200).json({ average: averageRating });
+        }
+      );
+    }
+  );
+});
+
+
+
+
+
+
 
 // start the server
 app.listen(port, () => {

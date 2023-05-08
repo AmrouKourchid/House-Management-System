@@ -1,16 +1,18 @@
 import { View } from "react-native";
 import React from "react";
 import { Text, Card } from "@rneui/themed";
-import {Button} from "react-native-paper";
+import { Button } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 
 export default function User({
   firstName,
   lastName,
   cellPhone,
-  addressUser, 
+  addressUser,
+  rating, // New prop for the rating value
 }) {
-    const navigation = useNavigation(); 
+  const navigation = useNavigation();
+  
   return (
     <Card containerStyle={{ borderRadius: 30, shadowRadius: 10 }}>
       <Card.Title
@@ -20,7 +22,6 @@ export default function User({
       </Card.Title>
       <Card.Divider />
       <View style={{ flexDirection: "row" }}>
-        
         <View>
           <Text style={{ marginTop: 10, fontSize: 12, fontWeight: "bold" }}>
             Phone: <Text style={{ fontWeight: "500" }}>{cellPhone}</Text>
@@ -32,14 +33,19 @@ export default function User({
         </View>
       </View>
       <Card.Divider />
-      <View style={{flexDirection:"row", justifyContent:"space-evenly"}}>
-      <Button mode="contained" buttonColor="rgba(34,50,99,1)" onPress={() =>  navigation.navigate('Request')}>
-    Request
-  </Button>
-  <Button mode="outlined" textColor="rgba(34,50,99,1)" onPress={() => console.log('Pressed')}>
-    Rate
-  </Button>
-  </View>
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+        <Button mode="contained" buttonColor="rgba(34,50,99,1)" onPress={() => navigation.navigate('Request')}>
+          Request
+        </Button>
+        <Button mode="outlined" textColor="rgba(34,50,99,1)" onPress={() => navigation.navigate('Rating')}>
+          Rate
+        </Button>
+      </View>
+      {rating > 0 && (
+        <View style={{ marginTop: 10, alignItems: 'center' }}>
+          <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Rating: {rating}</Text>
+        </View>
+      )}
     </Card>
   );
 }

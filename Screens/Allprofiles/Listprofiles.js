@@ -27,6 +27,7 @@ export default function Listprofiles({ route }) {
             lastName={worker.name.split(" ")[1]}
             cellPhone={worker.cellPhone}
             addressUser={worker.addressUser}
+            rating={worker.rating}
           />
         ))}
       </ScrollView>
