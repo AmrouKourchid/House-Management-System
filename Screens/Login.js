@@ -20,38 +20,27 @@ export default function Login({ navigation }) {
   const handleLogin = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.post('http://192.168.0.10:3000/Login', {
+      const response = await axios.post('http://192.168.48.185:3000/Login', {
         email,
         password,
       });
       if (response.status === 200) {
         setErrorMessage('');
         navigation.navigate('Tabs');
-      } else {
-        setErrorMessage('Invalid email or password');
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        setErrorMessage('Invalid email or password');
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.error);
       } else {
-        setErrorMessage('Something went wrong. Please try again later.');
+        setErrorMessage('An error occurred. Please try again later.');
       }
     } finally {
       setIsLoading(false);
     }
   };
 
-  
-
   return (
-    <ScrollView
-      style={styles.Login}
-      contentContainerStyle={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-      }}>
+    <ScrollView style={styles.Login}>
       <KeyboardAvoidingView style={styles.Group446} behavior="padding">
         <Image source={require('../assets/Logo.png')} style={styles.Logo} />
         <Text style={styles.headerText}>Welcome to HMS</Text>
@@ -67,7 +56,7 @@ export default function Login({ navigation }) {
           onChangeText={setEmail}
           autoCapitalize="none"
           autoCompleteType="email"
-          textContentType="email"
+          textContentType="emailAddress"
         />
         <TextInput
           style={styles.inputBox}
@@ -76,15 +65,18 @@ export default function Login({ navigation }) {
           secureTextEntry={true}
           selectionColor={'rgba(144,152,177,1)'}
           mode="outlined"
-          returnKeyType="next"
+          returnKeyType="done"
           value={password}
           onChangeText={setPassword}
           autoCapitalize="none"
         />
         <Pressable onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Log In</Text>
+          {isLoading ? (
+            <ActivityIndicator color="white" size="small" />
+          ) : (
+            <Text style={styles.buttonText}>Log In</Text>
+          )}
         </Pressable>
-        <Pressable style={styles.button}  onPress={()=> navigation.navigate('Tabs')}><Text style={styles.buttonText}>Force Login</Text></Pressable>
 
         {errorMessage !== '' && <Text style={styles.errorText}>{errorMessage}</Text>}
 
@@ -97,6 +89,7 @@ export default function Login({ navigation }) {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   Login: {

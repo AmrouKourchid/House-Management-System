@@ -80,9 +80,25 @@ app.get('/workers/:category', (req, res) => {
   });
 });
 
+app.post("/checkUser", (req, res) => {
+  const { email } = req.body;
+  const query = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
+
+  connection.query(query, [email], (error, results) => {
+    if (error) {
+      console.log(error);
+      res.sendStatus(500);
+    } else {
+      const count = results[0].count;
+      res.json({ existing: count > 0 });
+    }
+  });
+});
+
+
 
 app.post('/addWorker', (req, res) => {
-  const { name, category, cellPhone, addressUser } = req.body;
+  const { name, category, cellPhone, addressUser, email, password } = req.body;
 
   // check if worker with same cellPhone or addressUser already exists
   const checkQuery = 'SELECT * FROM workers WHERE cellPhone = ? OR addressUser = ?';
@@ -100,8 +116,8 @@ app.post('/addWorker', (req, res) => {
     }
 
     // insert new worker if check passes
-    const insertQuery = 'INSERT INTO workers (name, category, cellPhone, addressUser) VALUES (?, ?, ?, ?)';
-    const values = [name, category, cellPhone, addressUser];
+    const insertQuery = 'INSERT INTO workers (name, category, cellPhone, addressUser, email, password) VALUES (?, ?, ?, ?, ?, ?)';
+    const values = [name, category, cellPhone, addressUser, email, password];
     connection.query(insertQuery, values, (insertErr, insertResults) => {
       if (insertErr) {
         console.error('Error inserting worker:', insertErr);
@@ -118,7 +134,9 @@ app.post('/addWorker', (req, res) => {
 
 
 
+
+
 // start the server
 app.listen(port, () => {
-  console.log(`Server listening at http://192.168.0.10:${port}`);
+  console.log(`Server listening at http://192.168.48.185:${port}`);
 });

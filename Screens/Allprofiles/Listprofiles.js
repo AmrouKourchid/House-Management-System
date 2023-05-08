@@ -8,7 +8,7 @@ export default function Listprofiles({ route }) {
   const [workers, setWorkers] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://192.168.0.10:3000/workers/${category}`)
+    axios.get(`http://192.168.48.185:3000/workers/${category}`)
       .then(response => setWorkers(response.data))
       .catch(error => console.log(error));
   }, []);

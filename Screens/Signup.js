@@ -9,6 +9,7 @@ export default function Signup({ navigation }) {
     const [repassword, setRepassword] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [passwordMatchError, setPasswordMatchError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     const validateEmail = (email) => {
         const emailPattern = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
@@ -24,8 +25,18 @@ export default function Signup({ navigation }) {
             setPasswordMatchError(true);
             return;
         }
+        if (email.trim() === '') {
+          // Email is empty
+          return;
+      }
+      if (password.trim() === '') {
+          // Password is empty
+          setPasswordMatchError(false);
+          setPasswordError(true);
+          return;
+      }
         try {
-          const response = await axios.post('http://192.168.0.10:3000/Signup', { email, password });
+          const response = await axios.post('http://192.168.48.185:3000/Signup', { email, password });
           console.log(response.data);
         } catch (error) {
           console.error(error);
@@ -36,12 +47,7 @@ export default function Signup({ navigation }) {
     
   return (
 
-    <ScrollView style={styles.Signup} keyboardDismissMode='on-drag' contentContainerStyle={{
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-start",
-      alignItems: "flex-start",
-    }}>
+    <ScrollView style={styles.Signup} keyboardDismissMode='on-drag'>
         <KeyboardAvoidingView style={styles.Group446}>
         <Image source={require('../assets/Logo.png')} style={styles.Logo}/>
         <Text style={styles.headerText}>Let's Get Started</Text>
@@ -72,19 +78,21 @@ export default function Signup({ navigation }) {
             onChangeText={text => setPassword(text)}
             autoCapitalize="none"
         />
-        <TextInput
-            style={[styles.inputBox, passwordMatchError && styles.inputBoxError]}
-            placeholder={'Password Again'}
-            keyboardType={'default'}
-            secureTextEntry={true}
-            selectionColor={"#0283a9"}
-            mode="outlined"
-            returnKeyType="next"
-            value={repassword}
-            onChangeText={text => setRepassword(text)}
-            autoCapitalize="none"
-        />
-        {passwordMatchError && <Text style={styles.errorText}>Passwords do not match</Text>}
+<TextInput
+    style={[styles.inputBox, passwordMatchError && styles.inputBoxError]}
+    placeholder={'Password Again'}
+    keyboardType={'default'}
+    secureTextEntry={true}
+    selectionColor={"#0283a9"}
+    mode="outlined"
+    returnKeyType="next"
+    value={repassword}
+    onChangeText={text => setRepassword(text)}
+    autoCapitalize="none"
+/>
+{passwordMatchError && <Text style={styles.errorText}>Passwords do not match</Text>}
+{passwordError && <Text style={styles.errorText}>Please enter a password</Text>}
+
         <Pressable onPress={handleSignUp} style={styles.button}>
             <Text style={styles.buttonText}>Sign Up</Text>
         </Pressable>

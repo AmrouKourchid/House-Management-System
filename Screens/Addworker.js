@@ -1,16 +1,17 @@
-
 import React, { useState } from "react";
 import { View, TextInput, Text, Pressable, StyleSheet } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 
 // Move the API URL to a configuration file
-const API_URL = "http://192.168.0.10:3000";
+const API_URL = "http://192.168.48.185:3000";
 
 const Addworker = () => {
   const [name, setName] = useState("");
   const [cellPhone, setCellPhone] = useState("");
   const [addressUser, setAddressUser] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [category, setCategory] = useState("Plumber");
   const [existingWorker, setExistingWorker] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -23,26 +24,45 @@ const Addworker = () => {
     }
 
     axios
-      .post(`${API_URL}/addWorker`, {
-        name,
-        category,
-        cellPhone,
-        addressUser,
+      .post(`${API_URL}/checkUser`, {
+        email,
       })
       .then((response) => {
-        console.log(response.data);
-        const existing = response.data.existing;
-        if (existing) {
-          console.log("Worker with the same number or address already exists");
-          setExistingWorker(true);
-          setErrorMessage("Worker with the same number or address already exists");
+        if (!response.data.existing) {
+          console.log("User does not exist");
+          setErrorMessage("User does not exist");
         } else {
-          setName("");
-          setCellPhone("");
-          setAddressUser("");
-          setCategory("Plumber");
-          setExistingWorker(false);
-          setErrorMessage(null);
+          axios
+            .post(`${API_URL}/addWorker`, {
+              name,
+              category,
+              cellPhone,
+              addressUser,
+              email,
+              password,
+            })
+            .then((response) => {
+              console.log(response.data);
+              const existing = response.data.existing;
+              if (existing) {
+                console.log("Worker with the same number or address already exists");
+                setExistingWorker(true);
+                setErrorMessage("Worker with the same number or address already exists");
+              } else {
+                setName("");
+                setCellPhone("");
+                setAddressUser("");
+                setEmail("");
+                setPassword("");
+                setCategory("Plumber");
+                setExistingWorker(false);
+                setErrorMessage(null);
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              setErrorMessage("you are already a worker.");
+            });
         }
       })
       .catch((error) => {
@@ -77,6 +97,19 @@ const Addworker = () => {
     placeholder="Address"
     value={addressUser}
     onChangeText={setAddressUser}
+  />
+  <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+  />
+  <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
   />
   <Picker
     selectedValue={category}
