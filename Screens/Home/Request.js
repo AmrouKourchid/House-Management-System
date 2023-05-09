@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
-
+import axios from "axios";
 export default function Request() {
   const [workerEmail, setWorkerEmail] = useState('');
   const [cellPhone, setCellPhone] = useState('');
@@ -15,6 +15,10 @@ export default function Request() {
     console.log('Cell Phone:', cellPhone);
     console.log('Address:', address);
     console.log('Description:', description);
+  
+    axios.get(`http://192.168.1.19:3000/testmail/${workerEmail}/${cellPhone}/${address}/${description}`)
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
 
     // Set the submitted state to true
     setSubmitted(true);

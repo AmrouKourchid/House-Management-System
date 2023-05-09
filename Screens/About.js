@@ -1,28 +1,25 @@
-import { ScrollView, View, Text, StyleSheet, useColorScheme } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Linking } from 'react-native';
 import React from 'react';
+import { Button } from 'react-native-paper';
 export default function About() {
-      const colorScheme = useColorScheme();
+  const phoneNumber = '92603313';
+
+  const callNumber = () => {
+    Linking.openURL(`tel:${phoneNumber}`);
+  }
   return (
-    <ScrollView style={[
-        styles.container,
-        colorScheme === "light"
-          ? { backgroundColor: "#E9F8F9" }
-          : { backgroundColor: "#181823" },
-      ]}>
+    <ScrollView style={styles.container}>
       <View style={styles.headerWrapper} >
-        <Text  style={[styles.headerText,
-            colorScheme === "light"
-              ? { color: 'black' }
-              : { color: 'white' },
-          ]}>About Us</Text>
+        <Text  style={styles.headerText}>About Us</Text>
       </View>
-      <Text style={[styles.regularText,    
-        colorScheme === "light"
-        ? {color: "black"}
-        : {color: 'white'}
-    ]}>
-        We are a group of software engineering students aiming to match property owners with handymen who struggle to work at these difficult times. if you're one or the other, you're in the right place!
+      <Text style={styles.regularText}>
+        We are a group of software engineering students aiming to match property owners with handymen who struggle to work on these difficult times. if you're one or the other, you're in the right place!
       </Text>
+      <View style={styles.buttoncontainer}>
+      <Button style={styles.button} mode="contained"  onPress={callNumber}>
+        Contact Us
+      </Button>
+      </View>
     </ScrollView>
   );
 }
@@ -30,7 +27,7 @@ export default function About() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#181823',
+    backgroundColor: '#ffffff',
   },
   headerWrapper: {
     flexDirection: 'column',
@@ -53,19 +50,17 @@ const styles = StyleSheet.create({
   },
   buttoncontainer: {
     flexDirection:"row",
+    justifyContent:"center"
     
   },
   button: {
-    marginTop: 230,
-    marginLeft: 5,
-    backgroundColor: "#537FE7",
+    backgroundColor:"rgba(34,50,99,1)",
     height: 50,
     width: 150,
     borderRadius: 30,
     alignSelf:"flex-start"
   },
   buttontext: {
-
     color: "white",
     textAlign: "center",
     marginTop:11

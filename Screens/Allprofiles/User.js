@@ -62,6 +62,13 @@ export default function User({
             Address:
             <Text style={{ fontWeight: "500" }}>{addressUser}</Text>
           </Text>
+          {rating > 0 && (
+        <View style={{ marginTop: 10}}>
+          <Text style={{ fontSize: 12, fontWeight: "bold" }}>
+            Rating: {renderRatingStars()}
+          </Text>
+        </View>
+      )}
         </View>
       </View>
       <Card.Divider />
@@ -81,13 +88,7 @@ export default function User({
           Rate
         </Button>
       </View>
-      {rating > 0 && (
-        <View style={{ marginTop: 10, alignItems: "center" }}>
-          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-            Rating: {renderRatingStars()}
-          </Text>
-        </View>
-      )}
+
     </Card>
   );
 }

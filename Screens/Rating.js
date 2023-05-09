@@ -15,7 +15,7 @@ const Rating = () => {
     }
 
     axios
-      .post("http://172.20.10.8:3000/api/ratings", { workerId, rating })
+      .post("http://192.168.1.19:3000/api/ratings", { workerId, rating })
       .then((response) => {
         console.log(response.data);
         setWorkerId("");

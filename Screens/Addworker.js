@@ -4,7 +4,7 @@ import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 
 // Move the API URL to a configuration file
-const API_URL = "http://172.20.10.8:3000";
+const API_URL = "http://192.168.1.19:3000";
 
 const Addworker = () => {
   const [name, setName] = useState("");

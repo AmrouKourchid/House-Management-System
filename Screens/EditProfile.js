@@ -10,7 +10,7 @@ export default function EditProfile({ navigation }) {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await axios.post('http://172.20.10.8:3000/update-profile', {
+      const response = await axios.post('http://192.168.1.19:3000/update-profile', {
         email,
         newEmail,
         password,

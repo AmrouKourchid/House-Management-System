@@ -1,7 +1,7 @@
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const bodyParser = require('body-parser');
-
+const nodemailer = require('nodemailer');
 
 const app = express();
 const port = 3000;
@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Taha@01022002',
+  password: '19092002Amrou',
   database: 'hms'
 });
 
@@ -51,7 +51,33 @@ app.post('/Login', (req, res) => {
     return res.status(200).json({ message: 'Login successful' });
   });
 });
-
+app.get('/testmail/:email/:cellphone/:address/:description', (req, res) => {
+  const { email, cellphone, address, description } = req.params;
+  const message = `User Cell Phone: ${cellphone}\nAddress: ${address}\n Problem Description: ${description}`;
+  const messagee=`<h1 style="color:red;"> User Cell Phone: ${cellphone}</h1><br><h1>Address: ${address}</h1><br><h1> Problem Description: ${description}</h1>`;
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'housemanagementsystem580@gmail.com',
+      pass: 'kbjrzytrzgiiasmy'
+    }
+  });
+  
+  var mailOptions = {
+    from: 'hello@gmail.com',
+    to: email,
+    subject: 'You are needed for a job',
+    html: messagee
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+  }); 
 app.post('/Signup', (req, res) => {
   const { email, password } = req.body;
   const query = 'INSERT INTO users (email, password) VALUES (?, ?)';
@@ -210,5 +236,5 @@ app.post('/update-profile', (req, res) => {
 
 // start the server
 app.listen(port, () => {
-  console.log(`Server listening at http://172.20.10.8:${port}`);
+  console.log(`Server listening at http://192.168.1.19:${port}`);
 });
