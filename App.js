@@ -5,7 +5,7 @@ import Tabs from './Screens/Home/Tabs';
 import Login from './Screens/Login';
 import Signup from './Screens/Signup';
 import Listprofiles from './Screens/Allprofiles/Listprofiles';
-import Form from './Screens/Form';
+import EditProfile from './Screens/EditProfile';
 import Request from './Screens/Home/Request';
 import User from './Screens/Allprofiles/User';
 import Addworker from './Screens/Addworker';
@@ -22,7 +22,7 @@ export default function App() {
         <Stack.Screen name="Tabs" component={Tabs}  />
         <Stack.Screen name="Signup" component={Signup}/>
         <Stack.Screen name="Listprofiles" component={Listprofiles} options={{headerShown:true}}/>
-        <Stack.Screen name="Form" component={Form} options={{headerShown:true}}/>
+        <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:true}}/>
         <Stack.Screen name="Request" component={Request} options={{headerShown:true}}/>
         <Stack.Screen name="Profiles" component={User} />
         <Stack.Screen name="Addworker" component={Addworker} options={{headerShown:true}}/>

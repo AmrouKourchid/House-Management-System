@@ -1,78 +1,114 @@
-import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, Alert } from 'react-native';
-import Svg, { Polygon } from 'react-native-svg';
-import axios from 'axios';
+import React, { useState } from "react";
+import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
+import axios from "axios";
+import { Ionicons } from "@expo/vector-icons";
 
-const Rating = ({ workerId }) => {
+const Rating = () => {
+  const [workerId, setWorkerId] = useState("");
   const [rating, setRating] = useState(0);
-  const [confirmedRating, setConfirmedRating] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const submitRating = () => {
+    if (workerId === "" || rating === 0) {
+      setErrorMessage("Please enter the worker ID and select a rating.");
+      return;
+    }
+
+    axios
+      .post("http://172.20.10.8:3000/api/ratings", { workerId, rating })
+      .then((response) => {
+        console.log(response.data);
+        setWorkerId("");
+        setRating(0);
+        setErrorMessage(null);
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrorMessage("An error occurred.");
+      });
+  };
 
   const handleRatingPress = (selectedRating) => {
     setRating(selectedRating);
   };
 
-  const handleConfirm = () => {
-    if (rating === 0) {
-      Alert.alert('Error', 'Please select a rating');
-    } else {
-      saveRating();
-    }
-  };
-
-  const saveRating = () => {
-    // Send the rating to the backend server
-    axios
-      .post(`http://192.168.48.185:3000/ratings`, {
-        workerId: workerId,
-        rating: rating,
-      })
-      .then((response) => {
-        const average = response.data.average;
-        setConfirmedRating(rating);
-        Alert.alert('Success', `Rating confirmed: ${rating}`);
-      })
-      .catch((error) => {
-        console.log(error);
-        Alert.alert('Error', 'Failed to save rating');
-      });
-  };
-
-  
   const renderStars = () => {
     const stars = [];
-    const totalStars = 5;
-
-    for (let i = 1; i <= totalStars; i++) {
-      const starColor = i <= rating ? 'gold' : 'gray';
-
+    for (let i = 1; i <= 5; i++) {
+      const starIcon = i <= rating ? "star" : "star-outline";
       stars.push(
-        <TouchableOpacity key={i} onPress={() => handleRatingPress(i)}>
-          <Svg width="30" height="30">
-            <Polygon
-              points="15,0 18,10 30,11 20,19 23,30 15,24 7,30 10,19 0,11 12,10"
-              fill={starColor}
-            />
-          </Svg>
-        </TouchableOpacity>
+        <Pressable
+          key={i}
+          onPress={() => handleRatingPress(i)}
+          style={styles.star}
+        >
+          <Ionicons name={starIcon} size={32} color="#FFD700" />
+        </Pressable>
       );
     }
-
     return stars;
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ flexDirection: 'row' }}>{renderStars()}</View>
-      <TouchableOpacity onPress={handleConfirm} style={{ marginTop: 20 }}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Confirm</Text>
-      </TouchableOpacity>
-      {confirmedRating !== 0 && (
-        <Text style={{ marginTop: 10 }}>
-          Rating confirmed: {confirmedRating}
-        </Text>
-      )}
+    <View style={styles.container}>
+      <Text style={styles.title}>Rate the Worker</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Worker ID"
+        value={workerId}
+        onChangeText={setWorkerId}
+        keyboardType="numeric"
+      />
+      <View style={styles.starsContainer}>{renderStars()}</View>
+      <Pressable style={styles.button} onPress={submitRating}>
+        <Text style={styles.buttonText}>Submit Rating</Text>
+      </Pressable>
+      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  input: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#CCCCCC",
+    borderWidth: 1,
+    borderRadius: 4,
+    padding: 8,
+    marginBottom: 16,
+  },
+  starsContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 16,
+  },
+  star: {
+    padding: 8,
+  },
+  button: {
+    backgroundColor: "#00BFFF",
+    borderRadius: 4,
+    paddingVertical: 12,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  errorText: {
+    color: "red",
+    marginTop: 8,
+  },
+});
 
 export default Rating;

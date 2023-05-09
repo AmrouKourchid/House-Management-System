@@ -101,8 +101,8 @@ app.post('/addWorker', (req, res) => {
   const { name, category, cellPhone, addressUser, email, password } = req.body;
 
   // check if worker with same cellPhone or addressUser already exists
-  const checkQuery = 'SELECT * FROM workers WHERE cellPhone = ? OR addressUser = ?';
-  connection.query(checkQuery, [cellPhone, addressUser], (checkErr, checkResults) => {
+  const checkQuery = 'SELECT * FROM workers WHERE email = ?';
+  connection.query(checkQuery, [email], (checkErr, checkResults) => {
     if (checkErr) {
       console.error('Error checking for existing worker:', checkErr);
       res.status(500).json({ message: 'Internal server error' });
@@ -133,44 +133,74 @@ app.post('/addWorker', (req, res) => {
 
 
 
-
-
-// Save a rating
-app.post('/ratings', (req, res) => {
+// Endpoint for submitting a rating
+app.post("/api/ratings", (req, res) => {
+ 
   const { workerId, rating } = req.body;
+  const query1=`select * from workers where id=  ${workerId} ;`
+  var test=""
+  results=connection.query(query1,(err, result) =>{
+    ratingg=result[0]["rating"]
+    nbrating=result[0]["nbrating"]
 
-  // Validate the request data
-  if (!workerId || !rating) {
-    return res.status(400).json({ error: 'Invalid request data' });
-  }
-
-  // Save the rating to the database
-  connection.query(
-    'INSERT INTO ratings (workerId, rating) VALUES (?, ?)',
-    [workerId, rating],
-    (error, results) => {
+    if (!workerId || !rating) {
+      return res.status(400).json({ error: "Worker ID and rating are required." });
+    }
+  
+    // Perform database operation to update the worker's rating
+   
+    const query = "UPDATE workers SET rating = ? , nbrating= ? WHERE id = ?;";
+    const values = [((ratingg*nbrating+rating)/(nbrating+1)),nbrating+1, workerId];
+  
+    connection.query(query, values, (error, results) => {
       if (error) {
         console.log(error);
-        return res.status(500).json({ error: 'Failed to save rating to the database' });
+        return res.status(500).json({ error: "An error occurred while updating the rating." });
       }
-
-      // Calculate the average rating for the worker
-      connection.query(
-        'SELECT AVG(rating) AS averageRating FROM ratings WHERE workerId = ?',
-        [workerId],
-        (error, results) => {
-          if (error) {
-            console.log(error);
-            return res.status(500).json({ error: 'Failed to calculate average rating' });
-          }
-
-          const averageRating = results[0].averageRating || 0;
-          res.status(200).json({ average: averageRating });
-        }
-      );
-    }
-  );
+  
+      if (results.affectedRows === 0) {
+        return res.status(404).json({ error: "Worker not found." });
+      }
+  
+      res.json({ message: "Rating submitted successfully." });
+    });
+  });
+  // Validate input
+ 
 });
+
+
+
+
+// Handle the POST request to update the user's profile
+app.post('/update-profile', (req, res) => {
+  const { email, newEmail, password, newPassword } = req.body;
+
+  // Check if the email and password match a user in the database
+  const checkUserQuery = `SELECT * FROM users WHERE email = ? AND password = ?`;
+  connection.query(checkUserQuery, [email, password], (err, results) => {
+    if (err) {
+      console.error('Error executing query: ', err);
+      res.status(500).json({ error: 'An error occurred. Please try again later.' });
+    } else if (results.length === 0) {
+      res.status(401).json({ error: 'Invalid email or password.' });
+    } else {
+      // Update the user's email and password in the database
+      const updateUserQuery = `UPDATE users SET email = ?, password = ? WHERE email = ?`;
+      connection.query(updateUserQuery, [newEmail, newPassword, email], (err, updateResult) => {
+        if (err) {
+          console.error('Error executing query: ', err);
+          res.status(500).json({ error: 'An error occurred. Please try again later.' });
+        } else {
+          res.status(200).json({ message: 'Profile updated successfully.' });
+        }
+      });
+    }
+  });
+});
+
+
+
 
 
 
@@ -180,5 +210,5 @@ app.post('/ratings', (req, res) => {
 
 // start the server
 app.listen(port, () => {
-  console.log(`Server listening at http://192.168.48.185:${port}`);
+  console.log(`Server listening at http://172.20.10.8:${port}`);
 });

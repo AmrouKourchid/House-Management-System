@@ -36,7 +36,7 @@ export default function Signup({ navigation }) {
           return;
       }
         try {
-          const response = await axios.post('http://192.168.48.185:3000/Signup', { email, password });
+          const response = await axios.post('http://172.20.10.8:3000/Signup', { email, password });
           console.log(response.data);
         } catch (error) {
           console.error(error);

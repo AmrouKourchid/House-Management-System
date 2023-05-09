@@ -1,103 +1,119 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import React, {useState} from "react";
-import { TextInput, Button } from "react-native-paper";
-const Request = () => {
-  const user = {
-    firstName: "",
-    lastName: "",
-    country: "",
-    city: "",
-    job: "",
-    email: "",
+import React, { useState } from 'react';
+import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+
+export default function Request() {
+  const [workerEmail, setWorkerEmail] = useState('');
+  const [cellPhone, setCellPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [description, setDescription] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = () => {
+    // Display the request information
+    console.log('Request Information:');
+    console.log('Worker\'s Email:', workerEmail);
+    console.log('Cell Phone:', cellPhone);
+    console.log('Address:', address);
+    console.log('Description:', description);
+
+    // Set the submitted state to true
+    setSubmitted(true);
+
+    // Reset the form fields
+    setWorkerEmail('');
+    setCellPhone('');
+    setAddress('');
+    setDescription('');
   };
-  const [userInfo, setUserInfo] = useState(user);
-  console.log(userInfo);
+
   return (
     <View style={styles.container}>
-        <ScrollView style={styles.subContainer}>
-        <Text style={styles.title}> Request a Service</Text>
-          <TextInput
-            label="First Name"
-            value={userInfo.firstName}
-            mode="outlined"
-            onChangeText={(text) => {
-              setUserInfo({ firstName: text });
-            }}
-            style={styles.input}
-          />
-          <TextInput
-            label="Last Name"
-            mode="outlined"
-            value={userInfo.lastName}
-            onChangeText={(text) => {
-              setUserInfo({ lastName: text });
-            }}
-            
-            style={styles.input}
-          />
-          <TextInput
-            label="Phone Number"
-            mode="outlined"
-            value={userInfo.phone}
-            onChangeText={(text) => {
-              setUserInfo({ phone: text });
-            }}
-            keyboardType="numeric"
-            style={styles.input}
-          />
-          <TextInput
-            label="City"
-            value={userInfo.city}
-            mode="outlined"
-            onChangeText={(text) => {
-              setUserInfo({ city: text });
-            }}
-            style={styles.input}
-          />
-          <TextInput
-            label="Email"
-            mode="outlined"
-            value={userInfo.email}
-            onChangeText={(text) => {
-              setUserInfo({ email: text });
-            }}
-            style={styles.input}
-            keyboardType="email-address"
-          />
-            <Button mode="contained" buttonColor="rgba(34,50,99,1)" onPress={() => alert("Request sent!")}>Request</Button>
-        </ScrollView>
+      <Text style={styles.label}>Worker's Email:</Text>
+      <TextInput
+        style={styles.input}
+        value={workerEmail}
+        onChangeText={setWorkerEmail}
+        placeholder="Enter worker's email"
+      />
+
+      <Text style={styles.label}>Cell Phone:</Text>
+      <TextInput
+        style={styles.input}
+        value={cellPhone}
+        onChangeText={setCellPhone}
+        placeholder="Enter your cell phone"
+      />
+
+      <Text style={styles.label}>Address:</Text>
+      <TextInput
+        style={styles.input}
+        value={address}
+        onChangeText={setAddress}
+        placeholder="Enter your address"
+      />
+
+      <Text style={styles.label}>Description:</Text>
+      <TextInput
+        style={styles.input}
+        value={description}
+        onChangeText={setDescription}
+        placeholder="Enter description"
+        multiline
+      />
+
+      <Pressable onPress={handleSubmit} style={styles.button}>
+        <Text style={styles.buttonText}>Send Request</Text>
+      </Pressable>
+
+      {submitted && (
+        <View style={styles.submittedContainer}>
+          <Text style={styles.submittedText}>Submitted Request Information:</Text>
+          <Text>Worker's Email: {workerEmail}</Text>
+          <Text>Cell Phone: {cellPhone}</Text>
+          <Text>Address: {address}</Text>
+          <Text>Description: {description}</Text>
+        </View>
+      )}
     </View>
   );
-};
+}
 
-export default Request;
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-
-    },
-    containerScroll: {
-        flex: 1,
-        height: 300,
-        marginBottom: 30,
-    },
-    subContainer: {
-        width: 250,
-        marginTop: 90,
-    },
-    title: {
-        fontSize: 16,
-        textAlign:"center",
-        marginBottom:1
-    },
-    textContainer: {
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 100,
-        borderRadius:5000,
-    },
-    input: {
-        marginBottom: 10,
-    },
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 24,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 8,
+    marginBottom: 16,
+  },
+  button: {
+    backgroundColor: '#3478f6',
+    borderRadius: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  submittedContainer: {
+    marginTop: 24,
+  },
+  submittedText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
 });
