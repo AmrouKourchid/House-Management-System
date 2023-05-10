@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput, Pressable } from 'react-native';
+import { ScrollView, Text, StyleSheet, Pressable, Alert } from 'react-native';
 import axios from 'axios';
-
+import { TextInput } from 'react-native-paper';
 export default function EditProfile({ navigation }) {
   const [email, setEmail] = useState('');
   const [newEmail, setNewEmail] = useState('');
@@ -28,7 +28,9 @@ export default function EditProfile({ navigation }) {
       }
     }
   };
-
+  const handlePress = () => {
+    handleSaveChanges();
+    Alert.alert('Account Updated!'); };
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Edit Profile</Text>
@@ -41,6 +43,7 @@ export default function EditProfile({ navigation }) {
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        mode={'outlined'}
       />
 
       <Text style={styles.label}>New Email</Text>
@@ -51,6 +54,7 @@ export default function EditProfile({ navigation }) {
         onChangeText={setNewEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        mode={'outlined'}
       />
 
       <Text style={styles.label}>Password</Text>
@@ -61,6 +65,7 @@ export default function EditProfile({ navigation }) {
         onChangeText={setPassword}
         secureTextEntry
         autoCapitalize="none"
+        mode={'outlined'}
       />
 
       <Text style={styles.label}>New Password</Text>
@@ -71,9 +76,10 @@ export default function EditProfile({ navigation }) {
         onChangeText={setNewPassword}
         secureTextEntry
         autoCapitalize="none"
+        mode={'outlined'}
       />
 
-      <Pressable onPress={handleSaveChanges} style={styles.button}>
+      <Pressable onPress={handlePress} style={styles.button}>
         <Text style={styles.buttonText}>Save Changes</Text>
       </Pressable>
     </ScrollView>
@@ -95,15 +101,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+
+
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#2196F3',
+    backgroundColor: 'rgba(34,50,99,1)',
     borderRadius: 5,
     paddingVertical: 12,
     paddingHorizontal: 16,

@@ -6,14 +6,6 @@ export default function Settings({navigation}){
         <View>
             <View style={styles.container}>
                 <Pressable 
-                onPress={()=> navigation.popToTop() }
-                style={styles.button}
-                >
-                <Text style={styles.buttontext}>
-                Log out
-                </Text>
-                </Pressable>
-                <Pressable 
                 onPress={()=> navigation.navigate('EditProfile') }
                 style={styles.button}
                 >
@@ -30,7 +22,14 @@ export default function Settings({navigation}){
                 Become Worker
                 </Text>
                 </Pressable>
-                
+                <Pressable 
+                onPress={()=> navigation.popToTop() }
+                style={styles.logoutbutton}
+                >
+                <Text style={styles.buttontext}>
+                Log out
+                </Text>
+                </Pressable>
             </View>
         </View>
     )
@@ -54,5 +53,14 @@ const styles = StyleSheet.create({
       color: "#FFFFFF", // White color
       marginTop: 12,
     },
+    logoutbutton:{
+      marginTop: 70,
+      marginLeft: 0,
+      backgroundColor: "#df4759", // Updated color
+      height: 50,
+      width: 150,
+      borderRadius: 30,
+      alignSelf: "center",
+    }
   });
   

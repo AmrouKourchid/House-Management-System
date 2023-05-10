@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Alert } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import axios from "axios";
 export default function Request() {
   const [workerEmail, setWorkerEmail] = useState('');
@@ -10,12 +11,6 @@ export default function Request() {
 
   const handleSubmit = () => {
     // Display the request information
-    console.log('Request Information:');
-    console.log('Worker\'s Email:', workerEmail);
-    console.log('Cell Phone:', cellPhone);
-    console.log('Address:', address);
-    console.log('Description:', description);
-  
     axios.get(`http://192.168.1.19:3000/testmail/${workerEmail}/${cellPhone}/${address}/${description}`)
     .then(response => console.log(response))
     .catch(error => console.log(error));
@@ -29,7 +24,10 @@ export default function Request() {
     setAddress('');
     setDescription('');
   };
-
+  const handlePress = () => {
+    handleSubmit();
+    Alert.alert('Request Sent!');
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Worker's Email:</Text>
@@ -37,7 +35,9 @@ export default function Request() {
         style={styles.input}
         value={workerEmail}
         onChangeText={setWorkerEmail}
+        mode={'outlined'}
         placeholder="Enter worker's email"
+        keyboardType="email-address"
       />
 
       <Text style={styles.label}>Cell Phone:</Text>
@@ -45,6 +45,7 @@ export default function Request() {
         style={styles.input}
         value={cellPhone}
         onChangeText={setCellPhone}
+        mode={'outlined'}
         placeholder="Enter your cell phone"
       />
 
@@ -53,6 +54,7 @@ export default function Request() {
         style={styles.input}
         value={address}
         onChangeText={setAddress}
+        mode={'outlined'}
         placeholder="Enter your address"
       />
 
@@ -61,23 +63,14 @@ export default function Request() {
         style={styles.input}
         value={description}
         onChangeText={setDescription}
+        mode={'outlined'}
         placeholder="Enter description"
         multiline
       />
 
-      <Pressable onPress={handleSubmit} style={styles.button}>
+      <Pressable onPress={handlePress} style={styles.button}>
         <Text style={styles.buttonText}>Send Request</Text>
       </Pressable>
-
-      {submitted && (
-        <View style={styles.submittedContainer}>
-          <Text style={styles.submittedText}>Submitted Request Information:</Text>
-          <Text>Worker's Email: {workerEmail}</Text>
-          <Text>Cell Phone: {cellPhone}</Text>
-          <Text>Address: {address}</Text>
-          <Text>Description: {description}</Text>
-        </View>
-      )}
     </View>
   );
 }
@@ -94,14 +87,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    padding: 8,
     marginBottom: 16,
   },
   button: {
-    backgroundColor: '#3478f6',
+    backgroundColor: 'rgba(34, 50, 99, 1)',
     borderRadius: 8,
     paddingVertical: 16,
     paddingHorizontal: 32,
