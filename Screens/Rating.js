@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
+import { TextInput } from "react-native-paper";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -58,6 +59,8 @@ const Rating = () => {
         value={workerId}
         onChangeText={setWorkerId}
         keyboardType="numeric"
+        mode="outlined"
+        outlineColor="#223263"
       />
       <View style={styles.starsContainer}>{renderStars()}</View>
       <Pressable style={styles.button} onPress={submitRating}>
@@ -79,10 +82,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    backgroundColor: "#FFFFFF",
-    borderColor: "#CCCCCC",
-    borderWidth: 1,
-    borderRadius: 4,
     padding: 8,
     marginBottom: 16,
   },
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   button: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: "#223263",
     borderRadius: 4,
     paddingVertical: 12,
     alignItems: "center",

@@ -42,7 +42,7 @@ export default function Home({ navigation }) {
             </View>
             <ScrollView style={styles.imagetopview}>
                 <CategoryButton
-                    imageSource={require('../../assets/Plumber.png')}
+                    imageSource={require('../../assets/plumber.jpg')}
                     text="Plumber"
                     onPress={(category) => navigation.navigate('Listprofiles', { category })}
                     category="plumber"
@@ -54,13 +54,13 @@ export default function Home({ navigation }) {
                     category="electrician"
                 />
                 <CategoryButton
-                    imageSource={require('../../assets/carpenter.png')}
+                    imageSource={require('../../assets/carpenter.jpg')}
                     text="Carpenter"
                     onPress={(category) => navigation.navigate('Listprofiles', { category })}
                     category="carpenter"
                 />
                 <CategoryButton
-                    imageSource={require('../../assets/painter.png')}
+                    imageSource={require('../../assets/painter.jpg')}
                     text="Painter"
                     onPress={(category) => navigation.navigate('Listprofiles', { category })}
                     category="painter"

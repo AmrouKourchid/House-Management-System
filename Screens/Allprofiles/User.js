@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Dimensions } from "react-native";
 import { Text, Card } from "@rneui/themed";
 import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
@@ -46,7 +46,7 @@ export default function User({
   };
 
   return (
-    <Card containerStyle={{ borderRadius: 30, shadowRadius: 10 }}>
+    <Card containerStyle={{ borderRadius: 30, shadowRadius: 10, width: Dimensions.get('window').width - 20 }}>
       <Card.Title
         style={{ fontSize: 14, flexDirection: "row", justifyContent: "center" }}
       >
