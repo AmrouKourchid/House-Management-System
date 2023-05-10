@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
-
+import { TextInput } from "react-native-paper";
 // Move the API URL to a configuration file
 const API_URL = "http://192.168.1.19:3000";
 
@@ -84,6 +84,7 @@ const Addworker = () => {
     placeholder="Name"
     value={name}
     onChangeText={setName}
+    mode="outlined"
   />
   <TextInput
     style={styles.input}
@@ -91,18 +92,21 @@ const Addworker = () => {
     value={cellPhone}
     onChangeText={setCellPhone}
     keyboardType="numeric"
+    mode="outlined"
   />
   <TextInput
     style={styles.input}
     placeholder="Address"
     value={addressUser}
     onChangeText={setAddressUser}
+    mode="outlined"
   />
   <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        mode="outlined"
   />
   <TextInput
         style={styles.input}
@@ -110,6 +114,7 @@ const Addworker = () => {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        mode="outlined"
   />
   <Picker
     selectedValue={category}
@@ -141,9 +146,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#FFFFFF",
     borderColor: "#CCCCCC",
-    borderWidth: 1,
     borderRadius: 4,
-    padding: 8,
     marginBottom: 8,
   },
   picker: {
@@ -154,7 +157,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   button: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: "rgba(34, 50, 99, 1)",
     borderRadius: 4,
     paddingVertical: 12,
     alignItems: "center",

@@ -41,12 +41,14 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     fontSize: 30,
     textAlign: 'center',
+    color: '#3d4b77',
   },
   regularText: {
     fontSize: 24,
     padding: 20,
     marginVertical: 8,
     textAlign: 'center',
+    color: '#3d4b77',
   },
   buttoncontainer: {
     flexDirection:"row",

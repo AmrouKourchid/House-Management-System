@@ -16,7 +16,7 @@ export default function Settings({navigation}){
 
                 <Pressable 
                 onPress={()=> navigation.navigate('Addworker') }
-                style={styles.button}
+                style={styles.button2}
                 >
                 <Text style={styles.buttontext}>
                 Become Worker
@@ -40,7 +40,16 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     button: {
-      marginTop: 70,
+      marginTop: 40,
+      marginLeft: 0,
+      backgroundColor: "rgba(34, 50, 99, 1)", // Updated color
+      height: 50,
+      width: 150,
+      borderRadius: 30,
+      alignSelf: "center",
+    },
+    button2: {
+      marginTop: 10,
       marginLeft: 0,
       backgroundColor: "rgba(34, 50, 99, 1)", // Updated color
       height: 50,
@@ -54,7 +63,7 @@ const styles = StyleSheet.create({
       marginTop: 12,
     },
     logoutbutton:{
-      marginTop: 70,
+      marginTop: 10,
       marginLeft: 0,
       backgroundColor: "#df4759", // Updated color
       height: 50,

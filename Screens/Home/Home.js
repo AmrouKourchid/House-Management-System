@@ -31,16 +31,9 @@ export default function Home({ navigation }) {
                     find more than 100 providers
                 </Text>
             </View>
-            <View style={styles.searchbarview}>
-                <SearchBar
-                    placeholder="Find On HMS..."
-                    onChangeText={updateSearch}
-                    value={search}
-                    lightTheme={true}
-                    round={true}
-                />
-            </View>
+
             <ScrollView style={styles.imagetopview}>
+            <Text style={styles.categorytext}>Categories</Text>
                 <CategoryButton
                     imageSource={require('../../assets/plumber.jpg')}
                     text="Plumber"
@@ -100,16 +93,25 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     imagebottomview: {
+
         borderColor: "#3d4b77",
-        borderWidth: 2,
+        borderWidth: 0,
         width: "50%",
         borderRadius: 10,
-        marginTop: 20,
+        marginTop: 10,
         alignSelf: 'center',
+        flexDirection: 'column',
     },
     image: {
         width: 100,
         height: 100,
         alignSelf: 'center',
+        borderRadius: 10,
       },
+      categorytext: {
+        color: "#3d4b77",
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: 'center',
+      }
 });
